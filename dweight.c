@@ -5,8 +5,11 @@
 int main(void)
 {
 	// Declaring variables before use	
-	int height, length, width, volume, weight;
-	
+	int volume;
+	int height = 8;
+	int length = 12;
+	int width = 10;
+		
 	// Assigning values to variables to be used later in the
 	// program
 	height = 8; 
@@ -15,12 +18,11 @@ int main(void)
 	
 	// Computing the values based on business rules
 	volume = height * length * width; 
-	weight = (volume + 165) / 166;
 	
-	// Displaying the information to the user
+	// Displaying thei information to the user
 	printf("Dimensions: %dx%dx%d\n", length, width, height);
 	printf("Volume (cubic inches): %d\n", volume);
-	printf("Dimension weight (pounds): %d\n", weight);
+	printf("Dimension weight (pounds): %d\n", (volume + 165) / 166);
 
 	return 0;
 }
