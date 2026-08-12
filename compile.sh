@@ -2,9 +2,11 @@
 
 # help test gives a list to evaluate expressions 
 
-WARNING_FLAGS=false
+WARNING_FLAGS_TOGGLE=false
+WARNING_FLAGS="-Wall -W -pedantic"
 FILE_SOURCE=
-TARGET_SOURCE=pwd
+TARGET_SOURCE_TOGGLE=false
+TARGET_SOURCE=$(pwd)
 
 # Check if we have values for both arguments
 if [ $# -eq 0 ]; then # Lets us check the length of arguments provided 
@@ -23,13 +25,14 @@ fi
 while [ $# -gt 0 ]; do
 	case $1 in 
 		-w|--warnings) 
-		WARNING_FLAGS=true
-		shift # Moves the positional parameters to the left 
+			WARNING_FLAGS_TOGGLE=true
+			shift # Moves the positional parameters to the left 
 		;;
 
 		-d|--directory)
-		TARGET_SOURCE=$2
-		shift 2
+			TARGET_SOURCE=$2
+			TARGET_SOURCE_TOGGLE=true
+			shift 2
 		;;
 
 		*)
@@ -52,7 +55,7 @@ else
 	FILE_SOURCE=$(basename $FILE_SOURCE .c)
 fi
 
-if  [ ! -z "$TARGET_SOURCE" ]; then
+if  [ "$TARGET_SOURCE_TOGGLE" = true ]; then
 	if [ ! -d "$TARGET_SOURCE" ]; then
 		echo "Directory does not exist.. exiting."
 		exit 1
@@ -60,10 +63,10 @@ if  [ ! -z "$TARGET_SOURCE" ]; then
 fi 
 
 # Compile using the values provided to us
-if [ "$WARNING_FLAGS" = true ]; then
+if [ "$WARNING_FLAGS_TOGGLE" = true ]; then
 	echo "Compiling with extra warnings and pedantic"
-	WARNING_FLAGS="-Wall -W -pedantic"  
 else 
+	echo "Compiling without extra warnings and pedantic"
 	WARNING_FLAGS=""
 fi
 
