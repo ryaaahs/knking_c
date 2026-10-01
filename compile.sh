@@ -8,8 +8,11 @@ FILE_SOURCE=
 TARGET_SOURCE_TOGGLE=false
 TARGET_SOURCE=$(pwd)
 
-# Check if we have values for both arguments
-if [ $# -eq 0 ]; then # Lets us check the length of arguments provided 
+function display_help_information() {
+	# Displays help information to the user when learning about the script
+	#
+	#
+	
 	echo "NAME"
 	echo -e "compile - Make example.c file compiling more simple\n"
 	echo -e "SYNOPSIS\n"
@@ -20,10 +23,21 @@ if [ $# -eq 0 ]; then # Lets us check the length of arguments provided
 	echo "-w|--warnings: Enable flags on compile (Wall, pedantic..)"
 	echo "-d|--directory: The destination of c program"
 	exit 1
+}
+
+# Check if we have values for both arguments
+if [ $# -eq 0 ]; then # Lets us check the length of arguments provided 
+	display_help_information
+	exit 1
 fi	
 
 while [ $# -gt 0 ]; do
-	case $1 in 
+	case $1 in
+	        -h|--help)
+			display_help_information
+			exit 1
+		;;
+
 		-w|--warnings) 
 			WARNING_FLAGS_TOGGLE=true
 			shift # Moves the positional parameters to the left 
